@@ -114,25 +114,36 @@ def read_text_from_gcs(gcs_uri: str) -> str:
         print(f"❌ Error reading text from GCS ({gcs_uri}): {e}")
         return ""
     
-def read_json_from_gcs(blob_name: str) -> dict | list:
-    bucket_name = config.BUCKET
-    
+def read_json_from_gcs(blob_uri: str) -> dict | list | None:
+
     try:
+        # Validate URI
+        if not blob_uri.startswith("gs://"):
+            raise ValueError("blob_uri must start with 'gs://'")
+
+        # Parse bucket and blob name
+        parts = blob_uri[5:].split("/", 1)
+        if len(parts) != 2:
+            raise ValueError("Invalid GCS URI format. Expected 'gs://bucket_name/path/to/blob'")
+        bucket_name, blob_name = parts
+
+        # Initialize GCS client
         storage_client = storage.Client()
         bucket = storage_client.bucket(bucket_name)
         blob = bucket.blob(blob_name)
-        
-        # Download the blob's content as a string
+
+        # Download blob content as text
         json_string = blob.download_as_text()
-        
-        # Deserialize the JSON string into a Python object
+
+        # Deserialize JSON string
         json_data = json.loads(json_string)
-        
-        print(f"✅ Successfully read JSON from gs://{bucket_name}/{blob_name}")
+
+        print(f"✅ Successfully read JSON from {blob_uri}")
         return json_data
-    
+
     except Exception as e:
         print(f"❌ Error reading JSON from GCS: {e}")
+        traceback.print_exc()
         return None
     
     

@@ -15,7 +15,6 @@ import google.auth.transport.requests
 credentials, _ = google.auth.default(scopes=["https://www.googleapis.com/auth/cloud-platform"])
 credentials.refresh(google.auth.transport.requests.Request())
 
-
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 

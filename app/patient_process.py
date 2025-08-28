@@ -148,7 +148,7 @@ class patientEnrich:
         files = gcs_operation.list_gcs_children(bucket_path)
         for f in files:
             if '.txt' in f:
-                encounter_id = f.split('/').replace('.txt','')
+                encounter_id = f.split('/')[-1].replace('.txt','')
                 note = gcs_operation.read_text_from_gcs(f)
                 self.patient['ehr_note'].append(
                     {

@@ -10,6 +10,32 @@ from custom_runners import CRunner, gemini_2_5_flash_model, gemini_2_5_flash_ver
 import db_ops
 import gcs_operation
 import config
+import time
+
+
+
+class RunProcess:
+    def __init__(self, process_id):
+        self.process_id = process_id
+
+        self.init_patients_data()
+
+    def init_patients_data(self):
+        
+        patient_pool = gcs_operation.read_json_from_gcs(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/patient_pool.json")
+        for p in patient_pool:
+            gcs_operation.write_json_to_gcs(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/patients/{p.get('patient_id')}.json", p)
+
+
+    def run_patients(self):
+        patient_list_path = gcs_operation.list_gcs_children(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/patients")
+        for p_path in patient_list_path[:3]:
+            p_data = gcs_operation.read_json_from_gcs(p_path)
+
+            patientEnrich(p_data).enrich_ehr()
+
+            time.sleep(3)
+
 
 
 class patientFlag:
@@ -43,7 +69,6 @@ class patientFlag:
                             "note" : note
                         }
                     )
-
 
     async def run_flag_agent(self, patient_note):
 
@@ -94,8 +119,8 @@ class patientFlag:
         with open(f"{self.output_path}/process_result.json", "w") as f:
             json.dump(self.query_result, f, indent=4)
             
-        enrich = patientEnrich(self.process_id, self.patient_pool)
-        enrich.enrich1()
+        # enrich = patientEnrich(self.process_id, self.patient_pool)
+        # enrich.enrich1()
 
         print(self.process_id)
 
@@ -104,28 +129,51 @@ class patientFlag:
      
 
 class patientEnrich:
-    def __init__(self, process_id, patient_pool):
-        self.process_id = process_id
-        self.patient_pool = patient_pool
+    def __init__(self, patient):
+        self.patient = patient
 
-    def enrich1(self):
-        for p in self.patient_pool:
-            bucket_path = p.get('patient_bucket_path') + '/labs'
-            p['labs'] = []
-            try:
-                files = gcs_operation.list_gcs_children(bucket_path)
-                for f in files:
-                    if '.txt' in f  :
-                        lab_id = f.split('/').replace('.txt','')
-                        note = gcs_operation.read_text_from_gcs(f)
-                        p['notes'].append(
-                            {
-                                "lab_id" : lab_id,
-                                "note" : note
-                            }
-                        )
-            except:
-                pass
+    def add_status(self,process_obj):
+        if not self.patient.get('status'):
+            self.patient['status'] = []
         
-        gcs_operation.write_json_to_gcs(f"{config.PROCESS_PATH}/{self.process_id}/patient_enrich1.json", self.patient_pool)
+        self.patient['status'].append(process_obj)
+
+        gcs_operation.write_json_to_gcs(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.patient.get('process_id')}/patients/{self.patient.get('patient_id')}.json", self.patient)
+
+    def enrich_ehr(self):
+        bucket_path = self.patient.get('patient_bucket_path')
+        if not self.patient.get('ehr_note'):
+            self.patient['ehr_note'] = []
+
+        files = gcs_operation.list_gcs_children(bucket_path)
+        for f in files:
+            if '.txt' in f:
+                encounter_id = f.split('/').replace('.txt','')
+                note = gcs_operation.read_text_from_gcs(f)
+                self.patient['ehr_note'].append(
+                    {
+                        "encounter_id" : encounter_id,
+                        "note" : note
+                    }
+                )
+        self.add_status()
+        
+
+    def enrich_lab(self):
+        bucket_path = self.patient.get('patient_bucket_path')
+        if not self.patient.get('ehr_note'):
+            self.patient['ehr_note'] = []
+
+        files = gcs_operation.list_gcs_children(bucket_path)
+        for f in files:
+            if '.txt' in f:
+                encounter_id = f.split('/').replace('.txt','')
+                note = gcs_operation.read_text_from_gcs(f)
+                self.patient['ehr_note'].append(
+                    {
+                        "encounter_id" : encounter_id,
+                        "note" : note
+                    }
+                )
+        
 

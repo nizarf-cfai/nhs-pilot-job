@@ -31,8 +31,8 @@ def parse_key_value_args(args):
     return result
 
 def process(args):
-    process_batch = patient_process.patientFlag(args.get('process_id'))
-    process_batch.run_flag()
+    process_batch = patient_process.RunProcess(args.get('process_id'))
+    process_batch.run_patients()
 
 if __name__ == "__main__":
     try:

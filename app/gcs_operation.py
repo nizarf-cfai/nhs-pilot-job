@@ -59,37 +59,39 @@ def write_text_to_gcs(blob_name: str, text_content: str):
     except Exception as e:
         print(f"❌ Error writing text to GCS: {e}")
         
-def write_json_to_gcs(blob_name: str, json_data: dict | list):
-    bucket_name = config.BUCKET
-
+def write_json_to_gcs(blob_uri: str, json_data: dict | list):
     try:
+        # Parse bucket and blob name from full URI
+        if not blob_uri.startswith("gs://"):
+            raise ValueError("blob_uri must start with 'gs://'")
+        
+        parts = blob_uri[5:].split("/", 1)
+        if len(parts) != 2:
+            raise ValueError("Invalid GCS URI format. Expected 'gs://bucket_name/path/to/blob'")
+        
+        bucket_name, blob_name = parts
+
+        # Init GCS client
         storage_client = storage.Client()
         bucket = storage_client.bucket(bucket_name)
         blob = bucket.blob(blob_name)
 
-        # Serialize the dictionary to a JSON formatted string
-        # Using `indent=2` makes the JSON file human-readable
+        # Serialize dict/list to JSON
         json_string = json.dumps(json_data, indent=2)
 
+        # Upload to GCS
         blob.upload_from_string(json_string, content_type="application/json")
         
-        print(f"✅ Successfully wrote JSON to gs://{bucket_name}/{blob_name}")
+        print(f"✅ Successfully wrote JSON to {blob_uri}")
+        return True
 
     except Exception as e:
         print(f"❌ Error writing JSON to GCS: {e}")
-        err = traceback.print_exc()
-        return str(err)
+        traceback.print_exc()
+        return False
         
 def read_text_from_gcs(gcs_uri: str) -> str:
-    """
-    Read text content from a GCS URI.
 
-    Args:
-        gcs_uri (str): Full GCS URI like "gs://bucket_name/path/to/blob.txt"
-
-    Returns:
-        str: Content of the blob as text, or empty string on error
-    """
     try:
         # Parse bucket and blob from URI
         parsed = urlparse(gcs_uri)

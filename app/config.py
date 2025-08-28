@@ -2,7 +2,7 @@
 
 # Bucket
 BUCKET = "nhs_pilot"
-PROCESS_PATH = "dummy_process"
+PROCESS_PATH = "process"
 
 
 # Postgres Database

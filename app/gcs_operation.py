@@ -105,7 +105,17 @@ def read_text_from_gcs(gcs_uri: str) -> str:
         storage_client = storage.Client()
         bucket = storage_client.bucket(bucket_name)
         blob = bucket.blob(blob_name)
-        text_content = blob.download_as_text(encoding="utf-8", errors="replace")
+
+        text_bytes = blob.download_as_bytes()
+
+        # Try UTF-8, fallback to cp1252 with replacement
+        text_content = text_bytes.decode("utf-8", errors="replace")
+
+        # try:
+        #     text_content = text_bytes.decode("utf-8")
+        # except UnicodeDecodeError:
+        #     text_content = text_bytes.decode("cp1252", errors="replace")
+        # text_content = blob.download_as_text(encoding="utf-8", errors="replace")
 
         print(f"✅ Successfully read text from {gcs_uri}")
         return text_content

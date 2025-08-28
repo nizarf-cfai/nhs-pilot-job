@@ -156,7 +156,10 @@ class patientEnrich:
                         "note" : note
                     }
                 )
-        self.add_status()
+        self.add_status({
+            "process" : "retrieve",
+            "source" : "EHR"
+        })
         
 
     def enrich_lab(self):

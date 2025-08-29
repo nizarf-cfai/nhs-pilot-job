@@ -33,7 +33,7 @@ class RunProcess:
     def run_patients(self):
         patient_list_path = gcs_operation.list_gcs_children(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/patients")
 
-        for p_path in patient_list_path[:3]:
+        for p_path in patient_list_path:
             p_json_path = p_path + f"{p_path.split('/')[-2]}.json"
             print("patient json path :", p_json_path)
 

@@ -113,7 +113,7 @@ class PairwisePatient:
     async def run_pairwise(self):
         # Load patient data
         patient_obj_list = self.get_patient_obj_list()
-
+        print("LEN PATIENT OBJ", len(patient_obj_list))
         high_med = {
             'high' : [],
             "medium" : []

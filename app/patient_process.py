@@ -32,47 +32,31 @@ class RunProcess:
         for p_path in patient_list_path[:3]:
             p_data = gcs_operation.read_json_from_gcs(p_path)
 
-            patientEnrich(p_data).enrich_ehr()
+            p_data = patientEnrich(p_data).enrich_ehr()
 
             time.sleep(3)
+
+            p_data = patientFlag(p_data).run_flag()
 
 
 
 class patientFlag:
-    def __init__(self, process_id, drug_list):
-        self.patients_path = "patient_generation/patients"
+    def __init__(self, patient):
+        self.patient = patient
 
-        if not process_id:
-            self.process_id ="process-" + str(uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.now())))
-        else :
-            self.process_id = process_id
+    def add_status(self,process_obj):
+        if not self.patient.get('status'):
+            self.patient['status'] = []
+        
+        self.patient['status'].append(process_obj)
 
-        self.patient_pool = db_ops.get_dummy_patients_pool()
-        self.drug_watch_list = drug_list
-        self.query_result = []
+        gcs_operation.write_json_to_gcs(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.patient.get('process_id')}/patients/{self.patient.get('patient_id')}.json", self.patient)
 
+    async def run_flag_agent(self):
 
-    def get_note_patient(self):
-        gcs_operation.write_json_to_gcs(f"{config.PROCESS_PATH}/{self.process_id}/patient_pool.json", self.patient_pool)
-
-        for p in self.patient_pool:
-            bucket_path = p.get('patient_bucket_path')
-            p['notes'] = []
-            files = gcs_operation.list_gcs_children(bucket_path)
-            for f in files:
-                if '.txt' in f:
-                    encounter_id = f.split('/').replace('.txt','')
-                    note = gcs_operation.read_text_from_gcs(f)
-                    p['notes'].append(
-                        {
-                            "encounter_id" : encounter_id,
-                            "note" : note
-                        }
-                    )
-
-    async def run_flag_agent(self, patient_note):
-
-
+        patient_note = ""
+        for n in self.patient.get('ehr_note',[]):
+            patient_note += f"{n.get('note')}\n\n------\n\n"
 
         agent_file = "drug_flag.txt"
         with open(f"patient_generation/agents/{agent_file}", "r", encoding="utf-8") as file:
@@ -87,7 +71,7 @@ class patientFlag:
             drug_flag: bool = Field(..., description="Drug flag")
             drug_list: List[str] = Field(..., description="List of matched drug")
 
-        prompt = f"Check if the patient using drug in drug watch list.\nPatient note :\n{patient_note}\n\nDrug watch list : {self.drug_watch_list}"
+        prompt = f"Check if the patient using drug in drug watch list.\nPatient note :\n{patient_note}\n\nDrug watch list : {self.patient.get('drug_watch')}"
 
         res_obj = CRunner(
             agent = agent_,
@@ -102,29 +86,28 @@ class patientFlag:
 
 
     async def run_flag(self):
-
-        for p in self.patient_pool:
-            q_res = await self.run_flag_agent(p.get('note',''))
-            p.update(q_res)
-            # q_res['patient_id'] = p.get('patient_id')
-            # self.query_result.append(
-            #     q_res
-            # )
-
-
-        gcs_operation.write_json_to_gcs(f"{config.PROCESS_PATH}/{self.process_id}/patient_flag_res.json", self.patient_pool)
+        self.add_status(
+            {
+                "process":'drug_flag',
+                "status":'running',
+            }
+        )
+        
+        q_res = await self.run_flag_agent(p.get('note',''))
+        self.patient.update(q_res)
 
 
 
-        with open(f"{self.output_path}/process_result.json", "w") as f:
-            json.dump(self.query_result, f, indent=4)
-            
-        # enrich = patientEnrich(self.process_id, self.patient_pool)
-        # enrich.enrich1()
+        self.add_status(
+            {
+                "process":'drug_flag',
+                "status":'finish',
+            }
+        )
+        return self.patient
 
-        print(self.process_id)
 
-        return self.process_id
+
 
      
 
@@ -160,23 +143,27 @@ class patientEnrich:
             "process" : "retrieve",
             "source" : "EHR"
         })
+        return self.patient
         
 
     def enrich_lab(self):
-        bucket_path = self.patient.get('patient_bucket_path')
+        bucket_path = self.patient.get('patient_bucket_path') + '/labs'
         if not self.patient.get('ehr_note'):
-            self.patient['ehr_note'] = []
+            self.patient['lab_result'] = []
 
         files = gcs_operation.list_gcs_children(bucket_path)
         for f in files:
             if '.txt' in f:
-                encounter_id = f.split('/').replace('.txt','')
+                lab_id = f.split('/').replace('.txt','')
                 note = gcs_operation.read_text_from_gcs(f)
                 self.patient['ehr_note'].append(
                     {
-                        "encounter_id" : encounter_id,
+                        "lab_id" : lab_id,
                         "note" : note
                     }
                 )
-        
-
+        self.add_status({
+            "process" : "retrieve",
+            "source" : "lab"
+        })
+        return self.patient

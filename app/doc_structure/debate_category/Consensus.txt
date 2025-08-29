@@ -1,0 +1,53 @@
+
+# **Section 6: Consensus (Post-Debate)**
+
+This section consolidates the debate by comparing the **individual agent assessments**, highlighting areas of agreement/disagreement, and concluding with a **final agreed-upon risk level** supported by a balanced rationale.
+
+---
+
+### **6.1 Elements of Consensus**
+
+1. **Summary of Agent Agreement/Disagreement**
+
+   * Highlight whether agents agreed on diagnosis and risk level.
+   * If disagreements exist, briefly state the key differences.
+
+2. **Final Consensus Risk Level**
+
+   * Chosen among **None / Low / Medium / High**.
+   * May align with majority or strongest evidence.
+
+3. **Consolidated Reasoning**
+
+   * Synthesizes supporting and counter-arguments.
+   * Ensures the final decision reflects both caution and confidence.
+
+4. **Uncertainties and Data Gaps** (optional but valuable)
+
+   * Note if further testing or information is required.
+   * Example: “Imaging and viral serologies are needed to definitively rule out other causes.”
+
+---
+
+### **6.2 Example (Filled Out)**
+
+**Summary of Agent Perspectives:**
+
+* Agent A assessed **High** risk, attributing findings directly to methotrexate-induced liver injury.
+* Agent B assessed **Medium** risk, noting comorbid anemia may complicate interpretation.
+* Agent C assessed **Medium** risk, citing lack of viral hepatitis/imaging data.
+
+**Final Consensus Risk Level:** **High**
+
+**Consolidated Reasoning:**
+
+* All agents agree that significant liver injury is present (clinical jaundice + elevated LFTs).
+* Methotrexate use strongly correlates with symptom onset and pattern of hepatocellular injury.
+* Although additional testing is warranted, the strength of temporal association and absence of alternative strong explanations support a **High risk of drug-induced liver injury**.
+
+**Uncertainties / Data Gaps:**
+
+* Viral hepatitis serologies and liver ultrasound would provide stronger exclusion of other causes.
+* Recommend close monitoring of liver enzymes and consideration of methotrexate discontinuation.
+
+---

@@ -12,6 +12,8 @@ import gcs_operation
 import config
 import time
 
+import patient_reasoning
+
 
 
 class RunProcess:
@@ -24,13 +26,15 @@ class RunProcess:
         
         patient_pool = gcs_operation.read_json_from_gcs(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/patient_pool.json")
         for p in patient_pool:
-            gcs_operation.write_json_to_gcs(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/patients/{p.get('patient_id')}.json", p)
+            gcs_operation.write_json_to_gcs(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/patients/{p.get('patient_id')}/{p.get('patient_id')}.json", p)
 
 
     def run_patients(self):
         patient_list_path = gcs_operation.list_gcs_children(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/patients")
         for p_path in patient_list_path[:3]:
-            p_data = gcs_operation.read_json_from_gcs(p_path)
+            p_json_path = p_path + f"/{p_path.split('/')[-1]}.json"
+            print("patient json path :", p_json_path)
+            p_data = gcs_operation.read_json_from_gcs(p_json_path)
 
             p_data = patientEnrich(p_data).enrich_ehr()
 
@@ -38,11 +42,23 @@ class RunProcess:
 
             p_data = patientFlag(p_data).run_flag()
 
+            time.sleep(3)
+
+            p_data = patientEnrich(p_data).add_status(
+                {
+                    "process" : "retrieve",
+                    "source" : "EHR"
+                }
+            )
+
+            p_data = patient_reasoning.PatientDecom1(p_data)
+
 
 
 class patientFlag:
     def __init__(self, patient):
         self.patient = patient
+        self.p_json_path = f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.patient.get('process_id')}/patients/{self.patient.get('patient_id')}/{self.patient.get('patient_id')}.json"
 
     def add_status(self,process_obj):
         if not self.patient.get('status'):
@@ -50,7 +66,7 @@ class patientFlag:
         
         self.patient['status'].append(process_obj)
 
-        gcs_operation.write_json_to_gcs(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.patient.get('process_id')}/patients/{self.patient.get('patient_id')}.json", self.patient)
+        gcs_operation.write_json_to_gcs(self.p_json_path, self.patient)
 
     async def run_flag_agent(self):
 
@@ -92,8 +108,8 @@ class patientFlag:
                 "status":'running',
             }
         )
-        
-        q_res = await self.run_flag_agent(p.get('note',''))
+
+        q_res = await self.run_flag_agent()
         self.patient.update(q_res)
 
 
@@ -114,6 +130,8 @@ class patientFlag:
 class patientEnrich:
     def __init__(self, patient):
         self.patient = patient
+        self.p_json_path = f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.patient.get('process_id')}/patients/{self.patient.get('patient_id')}/{self.patient.get('patient_id')}.json"
+
 
     def add_status(self,process_obj):
         if not self.patient.get('status'):
@@ -121,7 +139,9 @@ class patientEnrich:
         
         self.patient['status'].append(process_obj)
 
-        gcs_operation.write_json_to_gcs(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.patient.get('process_id')}/patients/{self.patient.get('patient_id')}.json", self.patient)
+        gcs_operation.write_json_to_gcs(self.p_json_path, self.patient)
+        return self.patient
+    
 
     def enrich_ehr(self):
         bucket_path = self.patient.get('patient_bucket_path')

@@ -1,0 +1,60 @@
+
+# **Section 5: Agent Perspectives (for Debate Mode)**
+
+This section records the **independent analyses of different reasoning agents**. Each agent reviews the same patient data but may highlight different evidence, weigh risks differently, or prioritize alternate causes. The diversity of perspectives strengthens the debate.
+
+---
+
+### **5.1 Structure per Agent**
+
+For consistency, each agent’s analysis should include:
+
+1. **Summary Statement**
+
+   * Agent’s general impression of the case.
+
+2. **Evidence Considered**
+
+   * Key clinical signs, labs, imaging, and medication exposures.
+   * Explicitly list supporting vs conflicting evidence.
+
+3. **Differential Diagnosis Emphasis**
+
+   * Which causes the agent prioritizes (drug-induced, underlying disease, comorbidities).
+
+4. **Risk Assessment**
+
+   * Assign a preliminary **risk level (None / Low / Medium / High)**.
+   * Provide reasoning for that risk level.
+
+---
+
+### **5.2 Example (3 Agents)**
+
+**Agent A Analysis:**
+
+* **Summary Statement:** Strong suspicion for drug-induced liver injury.
+* **Evidence Considered:** Jaundice, elevated ALT/AST, bilirubin elevation, methotrexate exposure.
+* **Differential Diagnosis:** Methotrexate-induced liver injury most likely; other causes unlikely given negative history.
+* **Risk Assessment:** **High** — findings fit classic DILI pattern.
+
+---
+
+**Agent B Analysis:**
+
+* **Summary Statement:** Liver injury present, but etiology uncertain.
+* **Evidence Considered:** Elevated liver enzymes and jaundice noted. Methotrexate timing suggests causality, but anemia and comorbid conditions might complicate interpretation.
+* **Differential Diagnosis:** Could be multifactorial — methotrexate toxicity vs metabolic liver stress.
+* **Risk Assessment:** **Medium** — clear liver involvement, but causality not fully certain.
+
+---
+
+**Agent C Analysis:**
+
+* **Summary Statement:** Caution — insufficient data to fully attribute to drug.
+* **Evidence Considered:** Lab abnormalities are significant, but no imaging and no viral hepatitis screen available.
+* **Differential Diagnosis:** DILI possible, but undiagnosed NAFLD or viral hepatitis cannot be ruled out.
+* **Risk Assessment:** **Medium** — additional testing needed before confirming drug-induced injury.
+
+---
+

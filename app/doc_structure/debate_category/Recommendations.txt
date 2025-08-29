@@ -1,0 +1,72 @@
+
+# **Section 7: Recommendations**
+
+This section provides **evidence-based guidance** on how to proceed, based on the assessed risk of liver injury. Recommendations are tailored to the patient’s context, but structured to ensure consistency across analyses.
+
+---
+
+### **7.1 Components of Recommendations**
+
+1. **Further Diagnostic Testing**
+
+   * **Laboratory:** Repeat or expand liver panel (ALT, AST, ALP, bilirubin, INR), viral hepatitis serologies, autoimmune markers.
+   * **Imaging:** Ultrasound, CT, or MRI to rule out obstruction, fatty liver, or structural abnormalities.
+   * **Other:** Metabolic/genetic tests if rare disorders suspected (Wilson’s, hemochromatosis).
+
+2. **Medication Management**
+
+   * **Immediate Actions:**
+
+     * Discontinue suspected hepatotoxic medication if risk is **High** or **Medium-High**.
+     * Substitute with safer alternatives if clinically feasible.
+   * **Monitoring:**
+
+     * If risk is **Low**, continue medication but monitor liver function closely.
+
+3. **Monitoring & Follow-up**
+
+   * Serial LFT monitoring (e.g., weekly or biweekly until stable).
+   * Clinical monitoring for worsening jaundice, encephalopathy, ascites.
+   * Escalate care if signs of **acute liver failure** appear.
+
+4. **Specialist Referral**
+
+   * Refer to hepatology if injury is **moderate to severe** or unclear in etiology.
+   * Consider multidisciplinary discussion if patient has complex comorbidities.
+
+5. **Patient Counseling**
+
+   * Educate patient on warning symptoms: worsening jaundice, confusion, dark urine, abdominal swelling.
+   * Discuss risks and benefits of continuing vs stopping implicated drug.
+   * Advise avoidance of alcohol, hepatotoxic over-the-counter meds, and herbal supplements.
+
+---
+
+### **7.2 Example (Filled Out)**
+
+**Further Diagnostic Testing:**
+
+* Order hepatitis B and C serologies.
+* Schedule liver ultrasound to rule out obstruction or fatty infiltration.
+* Monitor ALT/AST, bilirubin, and INR weekly.
+
+**Medication Management:**
+
+* Discontinue methotrexate immediately due to high suspicion of DILI.
+* Consider alternative DMARD for rheumatoid arthritis.
+
+**Monitoring & Follow-up:**
+
+* Arrange follow-up in 1 week for labs and clinical exam.
+* If bilirubin >5 mg/dL or INR >1.5, consider hospitalization.
+
+**Specialist Referral:**
+
+* Refer to hepatology for further evaluation and management.
+
+**Patient Counseling:**
+
+* Advise patient to report worsening jaundice, confusion, or severe abdominal pain.
+* Avoid alcohol and herbal remedies until liver function normalizes.
+
+---

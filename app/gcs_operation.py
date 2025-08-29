@@ -45,19 +45,28 @@ def list_gcs_children(uri: str) -> list:
 def write_status(file_name :str, value :dict):
     write_or_update_json_to_gcs(config.BUCKET, f"status/{file_name}", value)
 
-def write_text_to_gcs(blob_name: str, text_content: str):
-    bucket_name = config.BUCKET
+def write_text_to_gcs(gs_url: str, text_content: str):
     try:
+        # Parse the GCS URL
+        if not gs_url.startswith("gs://"):
+            raise ValueError("URL must start with 'gs://'")
+
+        parsed = urlparse(gs_url)
+        bucket_name = parsed.netloc
+        blob_name = parsed.path.lstrip("/")  # remove leading '/'
+
+        # Initialize storage client and get bucket/blob
         storage_client = storage.Client()
         bucket = storage_client.bucket(bucket_name)
         blob = bucket.blob(blob_name)
 
+        # Upload string content
         blob.upload_from_string(text_content, content_type="text/plain")
-        
-        print(f"✅ Successfully wrote text to gs://{bucket_name}/{blob_name}")
-    
+
+        print(f"✅ Successfully wrote text to {gs_url}")
+
     except Exception as e:
-        print(f"❌ Error writing text to GCS: {e}")
+        print(f"❌ Error writing text to {gs_url}: {e}")
         
 def write_json_to_gcs(blob_uri: str, json_data: dict | list):
     try:

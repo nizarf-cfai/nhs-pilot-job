@@ -1,0 +1,44 @@
+
+# **Section 2: Initial Observations**
+
+This section summarizes **noteworthy findings** directly observable in the patient’s notes, labs, or clinical presentation. It does **not yet interpret or conclude**, but sets the stage for differential diagnosis.
+
+---
+
+### **Subsections & Content**
+
+1. **Clinical Presentation (Subjective Symptoms)**
+
+   * Key symptoms described by the patient.
+   * Examples: fatigue, jaundice, pruritus, abdominal pain (especially right upper quadrant), nausea, vomiting, anorexia.
+   * Timeline of symptom development (gradual vs sudden onset).
+
+2. **Physical Examination (Objective Signs)**
+
+   * Findings from the doctor’s exam.
+   * Examples: hepatomegaly, jaundice, ascites, edema, skin changes (spider angiomas, palmar erythema).
+   * General appearance (ill, cachectic, stable).
+
+3. **Laboratory Findings (if available)**
+
+   * Liver function tests (LFTs): ALT, AST, ALP, GGT, bilirubin.
+   * Coagulation tests (INR, PT) → may indicate impaired synthetic function.
+   * Complete blood count (CBC): anemia, leukocytosis.
+   * Other relevant labs: renal function (to rule out multi-organ impact).
+
+4. **Imaging Findings (if mentioned)**
+
+   * Ultrasound, CT, MRI → hepatomegaly, steatosis, biliary obstruction.
+   * Not always present in first encounter, but relevant if available.
+
+5. **Medication Timing & Exposure Notes**
+
+   * Correlation between medication initiation/change and symptom onset.
+   * High-risk drugs flagged for further analysis.
+
+6. **Other Notable Observations**
+
+   * Any unexpected findings not directly liver-related but potentially relevant (e.g., rash, fever, systemic signs).
+   * Lifestyle notes (alcohol intake, toxin exposure, herbal supplement use).
+
+---

@@ -1,0 +1,63 @@
+
+# **Section 4: Risk Stratification**
+
+This section provides a **final classification of risk** (None / Low / Medium / High) for liver injury in the patient, supported by explicit reasoning.
+
+---
+
+### **4.1 Risk Levels & Criteria**
+
+1. **Risk Level: None**
+
+   * No clinical, laboratory, or imaging evidence of liver injury.
+   * No hepatotoxic medications or relevant exposures.
+   * Symptoms are explained by other conditions.
+
+2. **Risk Level: Low**
+
+   * Mild, nonspecific symptoms (e.g., fatigue) without clear hepatic involvement.
+   * Medications with low/no hepatotoxic potential.
+   * Normal or minimally abnormal liver labs.
+
+3. **Risk Level: Medium**
+
+   * Some evidence suggestive of liver involvement (e.g., mild jaundice, ALT/AST moderately elevated).
+   * Possible temporal link with hepatotoxic drug, but alternative explanations exist.
+   * No signs of severe or acute liver failure.
+
+4. **Risk Level: High**
+
+   * Strong evidence of liver injury (markedly abnormal LFTs, significant jaundice, coagulopathy).
+   * Clear temporal association with hepatotoxic drug or toxin.
+   * Alternative explanations ruled out or less likely.
+   * Clinical signs of acute or worsening hepatic dysfunction.
+
+---
+
+### **4.2 Reasoning Framework**
+
+For each patient case, the reasoning should explicitly cover:
+
+* **Clinical Evidence**: Symptoms and physical signs suggestive of liver disease.
+* **Laboratory Evidence**: ALT/AST levels (hepatocellular injury), ALP (cholestatic injury), bilirubin, INR.
+* **Drug Association**: Timing, dose, known risk profile of medication(s).
+* **Exclusion of Alternatives**: Viral, alcohol, metabolic, autoimmune causes.
+* **Progression / Severity**: Stable vs worsening presentation.
+
+---
+
+### **4.3 Example (Filled Out)**
+
+**Risk Level:** **High**
+
+**Reasoning:**
+
+* Patient presents with jaundice, fatigue, and right upper quadrant discomfort.
+* Lab results show markedly elevated ALT (520 U/L), AST (410 U/L), and bilirubin (3.2 mg/dL), consistent with hepatocellular injury.
+* Methotrexate use initiated 3 months prior strongly correlates with symptom onset.
+* No evidence of viral hepatitis, alcohol abuse, or underlying cirrhosis.
+* Other comorbidities (chronic anemia) unlikely to explain hepatic findings.
+* Conclusion: Strong likelihood of **drug-induced liver injury (methotrexate-related)**.
+
+---
+

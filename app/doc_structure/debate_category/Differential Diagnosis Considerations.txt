@@ -1,0 +1,74 @@
+
+# **Section 3: Differential Diagnosis Considerations**
+
+This section evaluates potential explanations for the patient’s presentation. It systematically explores **drug-related causes**, **pre-existing liver conditions**, and **other comorbidities or external factors** that could mimic or contribute to liver injury.
+
+---
+
+### **3.1 Drug-Induced Liver Injury (DILI)**
+
+Focuses on whether prescribed, over-the-counter, or herbal medications are likely culprits.
+
+**Content to capture:**
+
+* **Causative Drugs**: Any known hepatotoxic medications in the patient’s regimen.
+* **Timing**: Symptom onset relative to drug initiation or dosage change.
+* **Dose Relationship**: Toxic dose vs idiosyncratic reaction.
+* **Known Risk Profile**: Literature or clinical guidelines confirming hepatotoxic risk.
+* **Previous Reactions**: Any history of liver injury from medications.
+
+**Example:**
+
+* Methotrexate is known to cause hepatotoxicity with prolonged use.
+* Symptoms (fatigue, jaundice) began \~3 months after initiation → temporal correlation supports suspicion.
+
+---
+
+### **3.2 Underlying Liver Conditions**
+
+Evaluates whether pre-existing hepatic disease could explain or contribute to current findings.
+
+**Content to capture:**
+
+* **Viral Hepatitis**: Prior infection with HBV, HCV, HAV, HEV.
+* **Alcoholic Liver Disease**: History of chronic alcohol intake.
+* **Non-Alcoholic Fatty Liver Disease (NAFLD/NASH)**: Often linked to obesity, diabetes, metabolic syndrome.
+* **Autoimmune Hepatitis**: Family history, other autoimmune conditions.
+* **Cirrhosis / Chronic Liver Disease**: Prior diagnosis or clinical features.
+
+**Example:**
+
+* Patient has no reported history of viral hepatitis or cirrhosis.
+* No chronic alcohol use reported.
+* NAFLD not documented, though mild anemia is present (likely unrelated).
+
+---
+
+### **3.3 Comorbidities and Other Potential Causes**
+
+Covers extrahepatic factors that could mimic or exacerbate liver injury.
+
+**Content to capture:**
+
+* **Metabolic Disorders**: Hemochromatosis, Wilson’s disease, alpha-1 antitrypsin deficiency.
+* **Systemic Diseases**: Sepsis, malignancy, hemolysis.
+* **Toxins / Environmental Exposure**: Herbal supplements, industrial chemicals, mushroom ingestion.
+* **Nutritional Status**: Malnutrition or deficiencies that might stress hepatic metabolism.
+* **Other Organ Dysfunction**: Cardiac failure, renal impairment → possible secondary hepatic congestion.
+
+**Example:**
+
+* Patient has chronic folate-deficiency anemia (may complicate overall health but not directly hepatotoxic).
+* No evidence of infections or systemic inflammatory disease.
+* No toxic exposures reported.
+
+---
+
+### **Summary Table (Optional for clarity)**
+
+| Possible Cause                 | Supporting Evidence              | Against Evidence                       | Likelihood |
+| ------------------------------ | -------------------------------- | -------------------------------------- | ---------- |
+| **Drug-Induced Liver Injury**  | Methotrexate use, symptom timing | No alternative strong explanation      | High       |
+| **Underlying Liver Condition** | None reported                    | No hepatitis, no alcohol, no cirrhosis | Low        |
+| **Other Comorbidities**        | Chronic anemia                   | Not directly linked to hepatotoxicity  | Low        |
+

@@ -1,0 +1,30 @@
+[
+    {
+        "section" : "Patient Information",
+        "details_path" : "doc_structure/debate_category/Patient Information.txt"
+    },
+    {
+        "section" : "Initial Observations",
+        "details_path" : "doc_structure/debate_category/Initial Observations.txt"
+    },
+    {
+        "section" : "Differential Diagnosis Considerations",
+        "details_path" : "doc_structure/debate_category/Differential Diagnosis Considerations.txt"
+    },
+    {
+        "section" : "Risk Stratification",
+        "details_path" : "doc_structure/debate_category/Risk Stratification.txt"
+    },
+    {
+        "section" : "Agent Perspectives",
+        "details_path" : "doc_structure/debate_category/Agent Perspectives.txt"
+    },
+    {
+        "section" : "Consensus",
+        "details_path" : "doc_structure/debate_category/Consensus.txt"
+    },
+    {
+        "section" : "Recommendations",
+        "details_path" : "doc_structure/debate_category/Recommendations.txt"
+    }
+]

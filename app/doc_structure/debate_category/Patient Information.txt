@@ -1,0 +1,52 @@
+
+# **Section 1: Patient Information**
+
+This section provides the **foundational context** for interpreting the case. It captures demographic details, encounter metadata, medical history, and medication exposure — all of which are critical for assessing possible liver injury.
+
+### **Subsections & Content**
+
+1. **Patient Identifiers**
+
+   * **Patient ID / MRN**: A unique identifier (avoid using real names for privacy).
+   * **Name (if allowed)**: Can be anonymized or initials.
+
+2. **Demographics**
+
+   * **Age**: Age is essential since susceptibility to liver injury varies by age group (children, elderly).
+   * **Sex/Gender**: Some liver conditions are sex-specific (e.g., autoimmune hepatitis more common in women).
+   * **Ethnicity (if available)**: Certain genetic backgrounds may influence susceptibility to DILI (e.g., HLA-linked risk).
+
+3. **Encounter Details**
+
+   * **Date of Encounter(s)**: Timeline is crucial for associating symptoms with drug exposures.
+   * **Type of Encounter**: Inpatient, outpatient, ER visit, follow-up, etc.
+   * **Location**: Hospital/clinic setting.
+
+4. **Relevant Medical History**
+
+   * **Liver-related history**: Hepatitis, cirrhosis, fatty liver disease, alcohol use disorder, etc.
+   * **Comorbid conditions**: Diabetes, metabolic syndrome, autoimmune disease, cancer, etc.
+   * **Surgical history**: Especially GI or hepatic surgeries.
+
+5. **Current and Past Medications**
+
+   * **Prescription drugs**: Especially known hepatotoxic drugs (methotrexate, isoniazid, acetaminophen overdose, etc.).
+   * **Over-the-counter drugs & supplements**: Herbal remedies, vitamins, alcohol use — often overlooked but important.
+   * **Dosage & Duration**: Helps assess whether the drug exposure aligns with symptom onset.
+
+6. **Allergies & Adverse Drug Reactions**
+
+   * Known drug allergies.
+   * Previous adverse events, particularly hepatic-related.
+
+7. **Reported Symptoms (subjective)**
+
+   * Patient’s own description: fatigue, jaundice, nausea, abdominal pain, etc.
+   * Onset and progression timeline.
+
+8. **Vital Signs (objective, if documented)**
+
+   * Blood pressure, heart rate, temperature, oxygen saturation.
+   * Helps rule out systemic infections or other causes.
+
+---

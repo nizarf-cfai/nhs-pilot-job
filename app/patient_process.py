@@ -13,7 +13,7 @@ import config
 import time
 
 import patient_reasoning
-
+import pairwise
 
 
 class RunProcess:
@@ -55,6 +55,14 @@ class RunProcess:
             )
 
             p_data = patient_reasoning.PatientDecom1(p_data)
+
+        pairwise_res = asyncio.run(pairwise.PairwisePatient(self.process_id).run_pairwise())
+
+        # for level, res_path in pairwise_res.items():
+        #     print(f"Run for category {level}")
+        #     rank_res = gcs_operation.read_json_from_gcs(res_path)
+
+
 
 
 

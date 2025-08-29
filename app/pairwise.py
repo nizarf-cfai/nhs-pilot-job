@@ -108,7 +108,7 @@ class PairwisePatient:
                 comparison_results[(p1['patient_id'], p2['patient_id'])] = result
         return comparison_results
 
-    async def main(self):
+    async def run_pairwise(self):
         # Load patient data
         patient_obj_list = self.get_patient_obj_list()
 
@@ -121,6 +121,8 @@ class PairwisePatient:
                 high_med['high'].append(p)
             elif 'medium' in p.get('debate_category',{}).get('risk','').lower():
                 high_med['medium'].append(p)
+
+        output_obj = {}
 
         for level, obj_list in high_med.items():
             data = self.load_patient_data(obj_list)
@@ -153,5 +155,10 @@ class PairwisePatient:
             df = df.sort_values('Criticality Rate (%)', ascending=False)
 
             records = df.to_dict(orient="records")
+
+            gcs_operation.write_json_to_gcs(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/pairwise_{level}.json", records)
+            output_obj[level] = f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/pairwise_{level}.json"
+
+        return output_obj
 
 

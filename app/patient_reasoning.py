@@ -477,6 +477,7 @@ class PatientDecom1:
         await res_obj.run_async()
         annouce = res_obj.output
         self.patient['action']['patient_announcement'] = annouce
+
         # action['patient_announcement'] = annouce
         # with open(f"{self.decom_path}/annouce_doc_{self.patient_id}.txt", "w", encoding="utf-8") as file:
         #     file.write(annouce)
@@ -485,6 +486,33 @@ class PatientDecom1:
         # with open(f"{self.decom_path}/action_{self.patient_id}.json", "w") as f:
         #     json.dump(action, f, indent=4)
 
+
+    def action_track(self):
+        self.patient['action_tracking'] = {
+            "action_id" : self.patient.get('action',{}).get('action_id'),
+            "actions" : [
+                {
+                    "patient_id" : self.patient.get('patient_id'),
+                    "action": "patient_annoucement",
+                    "status" : "sent"
+                },
+                {
+                    "patient_id" : self.patient.get('patient_id'),
+                    "action": "doctor_annoucement",
+                    "status" : "sent"
+                },
+                {
+                    "patient_id" : self.patient.get('patient_id'),
+                    "action": "patient_response",
+                    "status" : "pending"
+                },
+                {
+                    "patient_id" : self.patient.get('patient_id'),
+                    "action": "doctor_response",
+                    "status" : "pending"
+                }
+            ]
+        }
 
     async def run(self):
         await self.debate_patient()
@@ -508,6 +536,8 @@ class PatientDecom1:
 
         await self.generate_action()
         await self.announce_refine()
+        self.action_track()
+
         self.add_status(
             {"process" : "debate_reasoning",
             "status" : "finish"}

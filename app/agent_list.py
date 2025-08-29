@@ -92,7 +92,7 @@ Be objective and constructive. Your role is not to rewrite the output, but to id
 
 """
 assesment_agent = Agent(
-   name="geminin - Step Assesment Agent",
+   name="gemini - Step Assesment Agent",
    instructions=assesment_agent_system,
    tools=[],
    model=gemini_2_5_flash_model,
@@ -152,7 +152,7 @@ doc_content_system = """You are **StructuredContentGeneratorAgent**, a specializ
 
 
 doc_content_agent = Agent(
-	name="Document Content Agent",
+	name="gemini - Document Content Agent",
 	instructions=doc_content_system,
 	model=gemini_2_5_flash_model,
    # model_settings=ModelSettings(temperature=0.1, tool_choice="required"),
@@ -214,7 +214,7 @@ Patient is a 55-year-old with rheumatoid arthritis on methotrexate and leflunomi
 
 
 stage1_check_agent = Agent(
-	name="Stage 1 Check Agent",
+	name="Sgemini - tage 1 Check Agent",
 	instructions=stage1_check_system,
 	model=gemini_2_5_flash_model,
    # model_settings=ModelSettings(temperature=0.1, tool_choice="required"),
@@ -263,7 +263,7 @@ You will be given a structured analysis document about a single patient (section
 """
 
 risk_cat_agent = Agent(
-	name="Risk Category Agent",
+	name="gemini - Risk Category Agent",
 	instructions=risk_category_system,
 	model=gemini_2_5_flash_model,
    # model_settings=ModelSettings(temperature=0.1, tool_choice="required"),
@@ -317,7 +317,7 @@ Your task is to extract and normalize the data.
 
 """
 patient_data_agent = Agent(
-	name="Patient Data Agent",
+	name="gemini - Patient Data Agent",
 	instructions=patient_data_system,
 	model=gemini_2_5_flash_model,
    # model_settings=ModelSettings(temperature=0.1, tool_choice="required"),
@@ -366,7 +366,7 @@ class ActionData(BaseModel):
 
 
 action_agent = Agent(
-	name="Action Agent",
+	name="gemini - Action Agent",
 	instructions=action_system,
 	model=gemini_2_5_flash_model,
    # model_settings=ModelSettings(temperature=0.1, tool_choice="required"),
@@ -438,7 +438,7 @@ class RiskPercent(BaseModel):
 
 
 risk_percentage_agent = Agent(
-	name="Risk Percentage Agent",
+	name="gemini - Risk Percentage Agent",
 	instructions=risk_percentage_system,
 	model=gemini_2_5_flash_model,
    # model_settings=ModelSettings(temperature=0.1, tool_choice="required"),
@@ -465,10 +465,42 @@ Return only the **refined patient announcement** as plain text.
 """
 
 annouce_agent_refine = Agent(
-	name="Announce Refine Agent",
+	name="gemini - Announce Refine Agent",
 	instructions=refine_annoucement_system,
 	model=gemini_2_5_flash_model,
    # model_settings=ModelSettings(temperature=0.1, tool_choice="required"),
    # tools = [WebSearchTool(search_context_size='low')]
 )
 
+class Pairwise(BaseModel):
+	winner : str = Field(..., description="A/B")
+	reasoning : str = Field(..., description="reasoning of the result")
+ 
+pairwise_agent_system = """You are a comparison and evaluation agent. Your role is to analyze two items (A and B) and determine which is more **dominant**, **advantageous**, or **preferable** based on the **provided criteria**.
+
+### Your Task:
+
+1. **Understand the Criteria**
+
+   * Carefully review the criteria provided for comparison.
+   * Consider each criterion independently and objectively.
+
+2. **Perform a Side-by-Side Comparison**
+
+   * Compare both items across all criteria.
+   * Identify strengths, weaknesses, advantages, or gaps for each item per criterion.
+
+3. **Determine Dominance**
+
+   * After analyzing all criteria, assess which item is more dominant overall.
+   * If dominance is split by context, explain the conditions where one may outperform the other.
+   
+4. **Generate reasoning for the result**
+
+"""
+
+pairwise_agent = Agent(
+	name="gemini - Pairwise Agent",
+	instructions=pairwise_agent_system,
+	model=gemini_2_5_flash_model,
+)

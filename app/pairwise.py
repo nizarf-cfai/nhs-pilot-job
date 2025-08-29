@@ -15,8 +15,10 @@ class PairwisePatient:
 
 
     def get_patient_obj_list(self):
-        patient_list_path = gcs_operation.list_gcs_children(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/patients")
+        print("PROCES PATIENT PATH :",f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/patients")
 
+        patient_list_path = gcs_operation.list_gcs_children(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/patients")
+        print("PATH LIST RESULT :", patient_list_path)
         result = []
 
         for p_path in patient_list_path[:3]:
@@ -122,42 +124,46 @@ class PairwisePatient:
             elif 'medium' in p.get('debate_category',{}).get('risk','').lower():
                 high_med['medium'].append(p)
 
+        print("High cat len :", len(high_med.get('high',[])))
+        print("Medium cat len :", len(high_med.get('medium',[])))
+
         output_obj = {}
 
         for level, obj_list in high_med.items():
             data = self.load_patient_data(obj_list)
             
             print(f"\nLoaded {len(data)} patients for comparison")
-            if data:
-                print("Sample data format:")
-                print(json.dumps(data[0], indent=2))
-            
-            # Generate all patient pairs
-            pairs = list(itertools.combinations(data, 2))
-            print(f"\nWill perform {len(pairs)} pairwise comparisons")
-            
-            # Run comparisons
-            comparison_results = await self.run_comparisons(pairs, None)
-            
-            # Calculate ranking
-            win_rates = self.calculate_win_rates(comparison_results)
-            
-            df = pd.DataFrame([
-                {
-                    'Patient': patient,
-                    'criticality_rate': stats['criticality_rate'],
-                    'Critical Votes': stats['critical_votes'],
-                    'Total Matches': stats['total_matches']
-                }
-                for patient, stats in win_rates.items()
-            ])
-            
-            df = df.sort_values('criticality_rate', ascending=False)
+            if len(data) != 0:
+                if data:
+                    print("Sample data format:")
+                    print(json.dumps(data[0], indent=2))
+                
+                # Generate all patient pairs
+                pairs = list(itertools.combinations(data, 2))
+                print(f"\nWill perform {len(pairs)} pairwise comparisons")
+                
+                # Run comparisons
+                comparison_results = await self.run_comparisons(pairs, None)
+                
+                # Calculate ranking
+                win_rates = self.calculate_win_rates(comparison_results)
+                
+                df = pd.DataFrame([
+                    {
+                        'Patient': patient,
+                        'criticality_rate': stats['criticality_rate'],
+                        'Critical Votes': stats['critical_votes'],
+                        'Total Matches': stats['total_matches']
+                    }
+                    for patient, stats in win_rates.items()
+                ])
+                
+                df = df.sort_values('criticality_rate', ascending=False)
 
-            records = df.to_dict(orient="records")
+                records = df.to_dict(orient="records")
 
-            gcs_operation.write_json_to_gcs(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/pairwise_{level}.json", records)
-            output_obj[level] = f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/pairwise_{level}.json"
+                gcs_operation.write_json_to_gcs(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/pairwise_{level}.json", records)
+                output_obj[level] = f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/pairwise_{level}.json"
 
         return output_obj
 

@@ -86,7 +86,7 @@ class patientFlag:
             patient_note += f"{n.get('note')}\n\n------\n\n"
 
         agent_file = "drug_flag.txt"
-        with open(f"patient_generation/agents/{agent_file}", "r", encoding="utf-8") as file:
+        with open(f"agents_file/{agent_file}", "r", encoding="utf-8") as file:
             instructions = file.read()
 
         agent_ = Agent(

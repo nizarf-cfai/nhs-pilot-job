@@ -145,14 +145,14 @@ class PairwisePatient:
             df = pd.DataFrame([
                 {
                     'Patient': patient,
-                    'Criticality Rate (%)': stats['criticality_rate'],
+                    'criticality_rate': stats['criticality_rate'],
                     'Critical Votes': stats['critical_votes'],
                     'Total Matches': stats['total_matches']
                 }
                 for patient, stats in win_rates.items()
             ])
             
-            df = df.sort_values('Criticality Rate (%)', ascending=False)
+            df = df.sort_values('criticality_rate', ascending=False)
 
             records = df.to_dict(orient="records")
 

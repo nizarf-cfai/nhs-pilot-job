@@ -43,7 +43,7 @@ class RunProcess:
 
             time.sleep(3)
 
-            p_data = patientFlag(p_data).run_flag()
+            p_data = asyncio.run(patientFlag(p_data).run_flag())
 
             time.sleep(3)
 

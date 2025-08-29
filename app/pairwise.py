@@ -110,41 +110,48 @@ class PairwisePatient:
 
     async def main(self):
         # Load patient data
-        patient_obj_list = ""
-        data = self.load_patient_data('patient_records.json')
-        
-        print(f"\nLoaded {len(data)} patients for comparison")
-        if data:
-            print("Sample data format:")
-            print(json.dumps(data[0], indent=2))
-        
-        # Generate all patient pairs
-        pairs = list(itertools.combinations(data, 2))
-        print(f"\nWill perform {len(pairs)} pairwise comparisons")
-        
-        # Run comparisons
-        comparison_results = await self.run_comparisons(pairs, None)
-        
-        # Calculate ranking
-        win_rates = self.calculate_win_rates(comparison_results)
-        
-        df = pd.DataFrame([
-            {
-                'Patient': patient,
-                'Criticality Rate (%)': stats['criticality_rate'],
-                'Critical Votes': stats['critical_votes'],
-                'Total Matches': stats['total_matches']
-            }
-            for patient, stats in win_rates.items()
-        ])
-        
-        df = df.sort_values('Criticality Rate (%)', ascending=False)
+        patient_obj_list = self.get_patient_obj_list()
 
-        pairwise_res = df.to_dict()
+        high_med = {
+            'high' : [],
+            "medium" : []
+        }
+        for p in patient_obj_list:
+            if 'high' in p.get('debate_category',{}).get('risk','').lower():
+                high_med['high'].append(p)
+            elif 'medium' in p.get('debate_category',{}).get('risk','').lower():
+                high_med['medium'].append(p)
 
-        df.to_csv('patient_comparison_results.csv', index=False)
-        
-        print("\nResults saved to patient_comparison_results.csv")
-        print("\nTop 5 most critical patients:")
-        print(df.head().to_string(index=False))
+        for level, obj_list in high_med.items():
+            data = self.load_patient_data(obj_list)
+            
+            print(f"\nLoaded {len(data)} patients for comparison")
+            if data:
+                print("Sample data format:")
+                print(json.dumps(data[0], indent=2))
+            
+            # Generate all patient pairs
+            pairs = list(itertools.combinations(data, 2))
+            print(f"\nWill perform {len(pairs)} pairwise comparisons")
+            
+            # Run comparisons
+            comparison_results = await self.run_comparisons(pairs, None)
+            
+            # Calculate ranking
+            win_rates = self.calculate_win_rates(comparison_results)
+            
+            df = pd.DataFrame([
+                {
+                    'Patient': patient,
+                    'Criticality Rate (%)': stats['criticality_rate'],
+                    'Critical Votes': stats['critical_votes'],
+                    'Total Matches': stats['total_matches']
+                }
+                for patient, stats in win_rates.items()
+            ])
+            
+            df = df.sort_values('Criticality Rate (%)', ascending=False)
+
+            records = df.to_dict(orient="records")
+
 

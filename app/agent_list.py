@@ -326,30 +326,42 @@ patient_data_agent = Agent(
 
 
 action_system = """
-You are an expert clinical reasoning assistant.  
+
+You are an expert clinical reasoning assistant.
 You will be given a structured patient analysis document (sections may include: Patient Information, Initial Observations, Differential Diagnosis, Risk Stratification, Agent Perspectives, Consensus, Recommendations, and Liver Adverse Event Risk).
 
-**Your task:**  
+**Your tasks:**
 
-1. **Patient Announcement** – write a short, clear message to the patient explaining their possible risk of liver adverse event.  
-   - Encourage the patient to take the recommended test to confirm or rule out liver injury.  
-   - Emphasize that doing the test early can help prevent more serious complications.  
-   - Keep it concise (2–3 sentences), clear, and reassuring.  
+1. **Patient Announcement** – write a short, clear message to the patient explaining their possible risk of liver adverse event.
 
-2. **Priority Test (if needed)** – suggest only one most important diagnostic test to confirm or rule out a liver adverse event.  
-   - If no test is needed, state `"No further testing required at this time."`
+   * Encourage the patient to take the recommended test to confirm or rule out liver injury.
+   * Emphasize that doing the test early can help prevent more serious complications.
+   * Keep it concise (2–3 sentences), clear, and reassuring.
 
-3. **Risk–Cost–Benefit Analysis** – provide a short explanatory paragraph describing the cost–benefit trade-off.  
-   - Clearly state the **approximate financial cost** of the recommended test (e.g., $50–200 for standard blood tests, $200–1000 for imaging).  
-   - Compare this with the potential **medical and financial burden** of untreated critical liver conditions (e.g., hospitalization, $10,000–50,000+, or even liver transplant costs exceeding $150,000).  
-   - Explain why the relatively small cost of testing is justified by the high benefit of early detection and prevention of severe complications.  
-   - Write in a natural explanatory style, not as a bullet list.
+2. **Doctor Announcement** – write a short, professional summary for the doctor handling the patient.
+
+   * Highlight the suspected liver risk, the reasoning behind it, and the next critical step (diagnostic test or management action).
+   * Keep it focused and clinically relevant (2–3 sentences).
+
+3. **Priority Test (if needed)** – suggest only one most important diagnostic test to confirm or rule out a liver adverse event.
+
+   * If no test is needed, state `"No further testing required at this time."`
+
+4. **Risk–Cost–Benefit Analysis** – provide a short explanatory paragraph describing the cost–benefit trade-off.
+
+   * Clearly state the **approximate financial cost** of the recommended test (e.g., \$50–200 for standard blood tests, \$200–1000 for imaging).
+   * Compare this with the potential **medical and financial burden** of untreated critical liver conditions (e.g., hospitalization, \$10,000–50,000+, or even liver transplant costs exceeding \$150,000).
+   * Explain why the relatively small cost of testing is justified by the high benefit of early detection and prevention of severe complications.
+   * Write in a natural explanatory style, not as a bullet list.
+
 
 """
 class ActionData(BaseModel):
    patient_announcement: str = Field(..., description="Patient announce to inform the patient")
    recommended_tests: str = Field(..., description="Recommended test to confirm the liver adverse event")
    risk_cost_benefit_analysis: str = Field(..., description="Risk cost benefit analysis")
+   doctor_announcement: str = Field(..., description="Doctor annoucement to inform the doctor who handle the patient")
+
 
 
 

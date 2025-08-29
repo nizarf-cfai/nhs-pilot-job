@@ -432,6 +432,60 @@ class PatientDecom1:
 
         return content
     
+
+    async def generate_action(self):
+        doc_str = gcs_operation.read_text_from_gcs(f"{self.patient_path}/debate_category_doc_{self.patient_id}.txt")
+        # with open(f"{self.decom_path}/diagnosis_doc_{self.patient_id}.txt", "r", encoding="utf-8", errors="replace") as file:
+        #     doc_str = file.read()
+
+        prompt = f"Generate action for this diagnosis analysis document.\nDocument :\n{doc_str}"
+
+        res_obj = CRunner(
+            agent = agent_list.action_agent,
+            prompt = prompt,
+            format_output=agent_list.ActionData
+        )
+
+
+        await res_obj.run_async()
+        action = res_obj.output
+        action['action_id'] = f"action-{str(uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.now())))}"
+        self.patient['action'] = action
+
+        # with open(f"{self.decom_path}/action_{self.patient_id}.json", "w") as f:
+        #     json.dump(action, f, indent=4)
+
+    async def announce_refine(self):
+        # with open(f"{self.decom_path}/risk_percent_{self.patient_id}.json", "r", encoding="utf-8") as f:
+        #     risk_percent = json.load(f)
+
+        risk_object  =self.patient.get('debate_category')
+
+        # with open(f"{self.decom_path}/action_{self.patient_id}.json", "r", encoding="utf-8") as f:
+        #     action = json.load(f)
+
+        action = self.patient.get('action')
+
+        prompt = f"Refine this patient annoucement.\nPatient annoucement : {action.get('patient_announcement')}\nRisk level : {risk_object.get('risk')}\nPercentage : {risk_object.get('probability',{}).get('percentage')}\nReasoning : {risk_object.get('probability',{}).get('reasoning')}"
+
+        res_obj = CRunner(
+            agent = agent_list.annouce_agent_refine,
+            prompt = prompt,
+        )
+
+
+        await res_obj.run_async()
+        annouce = res_obj.output
+        self.patient['action']['patient_announcement'] = annouce
+        # action['patient_announcement'] = annouce
+        # with open(f"{self.decom_path}/annouce_doc_{self.patient_id}.txt", "w", encoding="utf-8") as file:
+        #     file.write(annouce)
+
+
+        # with open(f"{self.decom_path}/action_{self.patient_id}.json", "w") as f:
+        #     json.dump(action, f, indent=4)
+
+
     async def run(self):
         await self.debate_patient()
         await self.document_generate()
@@ -441,6 +495,21 @@ class PatientDecom1:
 
         self.add_status(
             {"process" : "debate_category",
+            "status" : "finish"}
+        )
+
+        return self.patient
+    
+    async def get_action(self):
+        self.add_status(
+            {"process" : "debate_reasoning",
+            "status" : "running"}
+        )
+
+        await self.generate_action()
+        await self.announce_refine()
+        self.add_status(
+            {"process" : "debate_reasoning",
             "status" : "finish"}
         )
 

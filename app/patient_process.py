@@ -21,6 +21,7 @@ class RunProcess:
         self.process_id = process_id
 
         self.init_patients_data()
+        self.patient_pool = []
 
     def init_patients_data(self):
         
@@ -31,9 +32,11 @@ class RunProcess:
 
     def run_patients(self):
         patient_list_path = gcs_operation.list_gcs_children(f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/patients")
+
         for p_path in patient_list_path[:3]:
-            p_json_path = p_path + f"/{p_path.split('/')[-1]}.json"
+            p_json_path = p_path + f"/{p_path.split('/')[-2]}.json"
             print("patient json path :", p_json_path)
+
             p_data = gcs_operation.read_json_from_gcs(p_json_path)
 
             p_data = patientEnrich(p_data).enrich_ehr()

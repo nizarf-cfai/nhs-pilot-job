@@ -6,7 +6,7 @@ from collections import defaultdict
 from agents import Agent
 import uuid
 import re
-from fw.custom_runners  import CRunner
+from custom_runners  import CRunner
 import textwrap
 
 class AgentGraph:

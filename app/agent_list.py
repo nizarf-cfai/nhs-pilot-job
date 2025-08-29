@@ -13,7 +13,7 @@ from langchain.schema import Document
 import ast
 from copy import deepcopy
 import json
-from fw.custom_runners import gemini_2_5_flash_model
+from custom_runners import gemini_2_5_flash_model
 
 
 

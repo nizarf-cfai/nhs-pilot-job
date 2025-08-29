@@ -5,7 +5,7 @@ from agents import Agent,  Runner, ModelSettings, WebSearchTool
 from copy import deepcopy
 import uuid
 import re
-from fw.custom_runners import CRunner
+from custom_runners import CRunner
 import asyncio
 import copy
 

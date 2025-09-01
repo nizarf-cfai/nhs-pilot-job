@@ -54,9 +54,9 @@ class RunProcess:
                 }
             )
 
-            p_data = patient_reasoning.PatientDecom1(p_data).run()
+            p_data = asyncio.run(patient_reasoning.PatientDecom1(p_data).run())
 
-        pairwise_res = asyncio.run(pairwise.PairwisePatient(self.process_id).run_pairwise())
+        # pairwise_res = asyncio.run(pairwise.PairwisePatient(self.process_id).run_pairwise())
 
         # for level, res_path in pairwise_res.items():
         #     print(f"Run for category {level}")

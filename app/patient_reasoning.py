@@ -515,6 +515,7 @@ class PatientDecom1:
         }
 
     async def run(self):
+        print("Start Decomposition Reasoning")
         self.add_status(
             {"process" : "debate_category",
             "status" : "running"}

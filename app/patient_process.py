@@ -54,7 +54,7 @@ class RunProcess:
                 }
             )
 
-            p_data = patient_reasoning.PatientDecom1(p_data)
+            p_data = patient_reasoning.PatientDecom1(p_data).run()
 
         pairwise_res = asyncio.run(pairwise.PairwisePatient(self.process_id).run_pairwise())
 

@@ -515,6 +515,10 @@ class PatientDecom1:
         }
 
     async def run(self):
+        self.add_status(
+            {"process" : "debate_category",
+            "status" : "running"}
+        )
         await self.debate_patient()
         await self.document_generate()
         await self._get_risk_category()

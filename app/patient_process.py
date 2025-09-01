@@ -56,11 +56,16 @@ class RunProcess:
 
             p_data = asyncio.run(patient_reasoning.PatientDecom1(p_data).run())
 
-        # pairwise_res = asyncio.run(pairwise.PairwisePatient(self.process_id).run_pairwise())
+        pairwise_res = asyncio.run(pairwise.PairwisePatient(self.process_id).run_pairwise())
 
-        # for level, res_path in pairwise_res.items():
-        #     print(f"Run for category {level}")
-        #     rank_res = gcs_operation.read_json_from_gcs(res_path)
+        for level, res_path in pairwise_res.items():
+            print(f"Run for category {level}")
+            rank_res = gcs_operation.read_json_from_gcs(res_path)
+            for p in rank_res:
+                # patient_id = p.get('patient_id')
+                p_path = f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.process_id}/patients/{p.get('patient_id')}/{p.get('patient_id')}.json"
+                p_data = gcs_operation.read_json_from_gcs(p_path)
+                p_data = asyncio.run(patient_reasoning.PatientDecom1(p_data).get_action())
 
 
 

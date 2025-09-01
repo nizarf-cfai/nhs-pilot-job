@@ -150,7 +150,7 @@ class PairwisePatient:
                 
                 df = pd.DataFrame([
                     {
-                        'Patient': patient,
+                        'patient_id': patient,
                         'criticality_rate': stats['criticality_rate'],
                         'Critical Votes': stats['critical_votes'],
                         'Total Matches': stats['total_matches']

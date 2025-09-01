@@ -25,8 +25,8 @@ class PatientDecom1:
         self.patient_path = f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.patient.get('process_id')}/patients/{self.patient.get('patient_id')}"
 
 
-        self.patient_path = f"patient_generation/patients/{self.patient_id}"
-        self.decom_path = f"{self.patient_path}/debate_category"
+        self.patient_path_local = f"patient_generation/patients/{self.patient_id}"
+        self.decom_path = f"{self.patient_path_local}/debate_category"
 
         os.makedirs(self.decom_path, exist_ok=True)
         self.add_status(

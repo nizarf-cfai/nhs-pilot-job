@@ -8,7 +8,7 @@ import re
 from custom_runners import CRunner
 import asyncio
 import copy
-
+import os
 
 class CognitiveDebate:
     def __init__(
@@ -45,6 +45,7 @@ class CognitiveDebate:
         self.extracted_topics = {}
         self.relative_quantify = {}
         self.path = path
+        os.makedirs(self.path, exist_ok=True)
         
     def _debate_id(self, name: str) -> str:
         # Convert to lowercase, replace spaces with underscores

@@ -374,7 +374,7 @@ class PatientDecom1:
         debate_res_str = self.collect_debate_outputs(debate_res)
 
 
-        with open("doc_structure/debate_category_structure.json", "r", encoding="utf-8") as f:
+        with open("app/doc_structure/debate_category_structure.json", "r", encoding="utf-8") as f:
             structure_doc = json.load(f)
 
         doc_context = ""

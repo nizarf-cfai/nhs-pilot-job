@@ -384,7 +384,7 @@ class PatientDecom1:
             sec_name = sec.get('section')
             detail_path = sec.get('details_path')
 
-            with open(detail_path, 'r', encoding='utf-8') as file:
+            with open("app/" + detail_path, 'r', encoding='utf-8') as file:
                 detail_str = file.read()
 
             prompt = f"""You are a medical diagnosis expert for patient id {self.patient_id}. For the section titled: {sec_name}, generate content for this section with this detail:

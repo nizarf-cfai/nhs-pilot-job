@@ -174,10 +174,10 @@ class PatientDecom1:
     def call_ct_agent(self, tools, mode=''):
         agents_participants = []
         
-        agent_files = os.listdir('debate_agents')
+        agent_files = os.listdir('app/debate_agents')
 
         for a in agent_files:
-            file_path = f"debate_agents/{a}"
+            file_path = f"app/debate_agents/{a}"
             agent_name = a.replace('.txt','')
 
             with open(file_path, "r", encoding="utf-8") as f:
@@ -679,10 +679,10 @@ class PatientDecom2:
     def call_ct_agent(self, tools, mode=''):
         agents_participants = []
         
-        agent_files = os.listdir('debate_agents')
+        agent_files = os.listdir('app/debate_agents')
 
         for a in agent_files:
-            file_path = f"debate_agents/{a}"
+            file_path = f"app/debate_agents/{a}"
             agent_name = a.replace('.txt','')
 
             with open(file_path, "r", encoding="utf-8") as f:

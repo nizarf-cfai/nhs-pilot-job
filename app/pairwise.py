@@ -21,7 +21,7 @@ class PairwisePatient:
         print("PATH LIST RESULT :", patient_list_path)
         result = []
 
-        for p_path in patient_list_path[:3]:
+        for p_path in patient_list_path:
             p_json_path = p_path + f"{p_path.split('/')[-2]}.json"
             print("patient json path :", p_json_path)
 
@@ -102,10 +102,10 @@ class PairwisePatient:
         
         return win_rates
 
-    async def run_comparisons(self, pairs, client):
+    async def run_comparisons(self, pairs):
         comparison_results = {}
         for p1, p2 in tqdm(pairs, desc="Comparing patients"):
-            result = await self.compare_patients(p1, p2, client)
+            result = await self.compare_patients(p1, p2)
             if result:
                 comparison_results[(p1['patient_id'], p2['patient_id'])] = result
         return comparison_results
@@ -143,7 +143,7 @@ class PairwisePatient:
                 print(f"\nWill perform {len(pairs)} pairwise comparisons")
                 
                 # Run comparisons
-                comparison_results = await self.run_comparisons(pairs, None)
+                comparison_results = await self.run_comparisons(pairs)
                 
                 # Calculate ranking
                 win_rates = self.calculate_win_rates(comparison_results)

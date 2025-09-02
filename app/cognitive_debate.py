@@ -123,8 +123,8 @@ class CognitiveDebate:
             # deb_res = res.output
             deb_op = f"# Debate answer {res['agent']}:\n\n" + res['output'] + "\n\n--------\n\n"
             
-            with open(f"{self.path}/{res['agent']}.txt", "w", encoding="utf-8") as f:
-                f.write(deb_op)
+            # with open(f"{self.path}/{res['agent']}.txt", "w", encoding="utf-8") as f:
+            #     f.write(deb_op)
                 
             self.debate_dumps += deb_op
             self.debate_op.append(

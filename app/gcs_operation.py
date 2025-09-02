@@ -193,3 +193,8 @@ def write_or_update_json_to_gcs(blob_name: str, update_data: dict):
 
     except Exception as e:
         return str(e)
+    
+
+
+
+    

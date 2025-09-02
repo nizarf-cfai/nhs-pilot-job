@@ -133,7 +133,7 @@ class PairwisePatient:
             data = self.load_patient_data(obj_list)
             
             print(f"\nLoaded {len(data)} patients for comparison")
-            if len(data) != 0:
+            if len(data) > 1:
                 if data:
                     print("Sample data format:")
                     print(json.dumps(data[0], indent=2))

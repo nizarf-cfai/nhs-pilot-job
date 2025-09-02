@@ -214,7 +214,7 @@ Patient is a 55-year-old with rheumatoid arthritis on methotrexate and leflunomi
 
 
 stage1_check_agent = Agent(
-	name="Sgemini - tage 1 Check Agent",
+	name="gemini - tage 1 Check Agent",
 	instructions=stage1_check_system,
 	model=gemini_2_5_flash_model,
    # model_settings=ModelSettings(temperature=0.1, tool_choice="required"),

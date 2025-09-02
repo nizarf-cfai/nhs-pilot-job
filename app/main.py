@@ -13,7 +13,7 @@ import config
 import time
 from concurrent.futures import ThreadPoolExecutor
 import patient_process
-
+import pairwise
 
 
 # Convert key=value pairs into a dictionary
@@ -34,6 +34,9 @@ def process(args):
     process_batch = patient_process.RunProcess(args.get('process_id'))
     process_batch.run_patients()
 
+def run_pairwise(args):
+    pass
+
 if __name__ == "__main__":
     try:
         command = sys.argv[1]
@@ -45,6 +48,9 @@ if __name__ == "__main__":
         if command == "run_process":
             print("Running process")
             process(args)
+
+        elif command == "pairwise":
+            run_pairwise(args)
 
         else:
             print(f"❌ Unknown command: {command}")

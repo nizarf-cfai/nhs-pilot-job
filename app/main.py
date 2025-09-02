@@ -35,7 +35,7 @@ def process(args):
     process_batch.run_patients()
 
 def run_pairwise(args):
-    pass
+    pairwise_res = asyncio.run(pairwise.PairwisePatient(args.get('process_id')).run_pairwise())
 
 if __name__ == "__main__":
     try:

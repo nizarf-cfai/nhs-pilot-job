@@ -14,7 +14,7 @@ import time
 
 import patient_reasoning
 import pairwise
-
+from enrich import patientEnrich
 
 class RunProcess:
     def __init__(self, process_id):
@@ -142,64 +142,3 @@ class patientFlag:
 
 
      
-
-class patientEnrich:
-    def __init__(self, patient):
-        self.patient = patient
-        self.p_json_path = f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{self.patient.get('process_id')}/patients/{self.patient.get('patient_id')}/{self.patient.get('patient_id')}.json"
-
-
-    def add_status(self,process_obj):
-        if not self.patient.get('status'):
-            self.patient['status'] = []
-        
-        self.patient['status'].append(process_obj)
-
-        gcs_operation.write_json_to_gcs(self.p_json_path, self.patient)
-        return self.patient
-    
-
-    def enrich_ehr(self):
-        bucket_path = self.patient.get('patient_bucket_path')
-        if not self.patient.get('ehr_note'):
-            self.patient['ehr_note'] = []
-
-        files = gcs_operation.list_gcs_children(bucket_path)
-        for f in files:
-            if '.txt' in f:
-                encounter_id = f.split('/')[-1].replace('.txt','')
-                note = gcs_operation.read_text_from_gcs(f)
-                self.patient['ehr_note'].append(
-                    {
-                        "encounter_id" : encounter_id,
-                        "note" : note
-                    }
-                )
-        self.add_status({
-            "process" : "retrieve",
-            "source" : "EHR"
-        })
-        return self.patient
-        
-
-    def enrich_lab(self):
-        bucket_path = self.patient.get('patient_bucket_path') + '/labs'
-        if not self.patient.get('ehr_note'):
-            self.patient['lab_result'] = []
-
-        files = gcs_operation.list_gcs_children(bucket_path)
-        for f in files:
-            if '.txt' in f:
-                lab_id = f.split('/').replace('.txt','')
-                note = gcs_operation.read_text_from_gcs(f)
-                self.patient['ehr_note'].append(
-                    {
-                        "lab_id" : lab_id,
-                        "note" : note
-                    }
-                )
-        self.add_status({
-            "process" : "retrieve",
-            "source" : "lab"
-        })
-        return self.patient

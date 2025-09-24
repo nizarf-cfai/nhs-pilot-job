@@ -14,7 +14,8 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 import patient_process
 import pairwise
-
+import gcs_operation
+import patient_reasoning
 
 # Convert key=value pairs into a dictionary
 def parse_key_value_args(args):
@@ -30,12 +31,23 @@ def parse_key_value_args(args):
                 result[key] = value
     return result
 
-def process(args):
+def run_process(args):
     process_batch = patient_process.RunProcess(args.get('process_id'))
     process_batch.run_patients()
 
 def run_pairwise(args):
     pairwise_res = asyncio.run(pairwise.PairwisePatient(args.get('process_id')).run_pairwise())
+
+
+def process(args):
+    process_id = args.get('process_id')
+    patient_id = args.get('patient_id')
+    query = args.get('query')
+    file_path = f"gs://{config.BUCKET}/{config.PROCESS_PATH}/{process_id}/patients/{patient_id}/{patient_id}.json"
+
+    p_data = gcs_operation.read_json_from_gcs(file_path)
+    asyncio.run(patient_reasoning.PatientDecom1(p_data)._data_analysis(query))
+
 
 if __name__ == "__main__":
     try:
@@ -47,10 +59,13 @@ if __name__ == "__main__":
         print(f"▶️ Running command: {command} with args: {args}")
         if command == "run_process":
             print("Running process")
-            process(args)
+            run_process(args)
 
         elif command == "pairwise":
             run_pairwise(args)
+
+        elif command == "process":
+            process(args)
 
         else:
             print(f"❌ Unknown command: {command}")
